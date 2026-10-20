@@ -139,10 +139,6 @@ http://localhost:5173
 
 Open the URL shown by Vite in your browser.
 
-## Build the Frontend
-
-From the `client` directory:
-
 ```bash
 npm run build
 ```
