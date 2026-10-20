@@ -1,0 +1,792 @@
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+/* ========================================
+   1. DESIGN TOKENS & GLOBAL STYLES
+======================================== */
+
+:root {
+  color-scheme: dark;
+
+  --app-bg: #080b14;
+  --surface: #101624;
+  --surface-raised: #151d2e;
+  --surface-hover: #1a263a;
+
+  --border: rgba(148, 163, 184, 0.14);
+  --border-hover: rgba(129, 140, 248, 0.42);
+
+  --text-primary: #f1f5ff;
+  --text-secondary: #a1aec5;
+  --text-muted: #77849c;
+
+  --accent: #818cf8;
+  --accent-bright: #a5b4fc;
+  --accent-blue: #60a5fa;
+  --accent-purple: #a78bfa;
+
+  --success: #34d399;
+  --danger: #fb7185;
+
+  --card-radius: 24px;
+  --control-radius: 14px;
+
+  --shadow-card:
+    0 20px 70px rgba(0, 0, 0, 0.24),
+    0 1px 0 rgba(255, 255, 255, 0.025) inset;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  scroll-behavior: smooth;
+  background: var(--app-bg);
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--text-primary);
+  background:
+    radial-gradient(
+      ellipse at 12% 0%,
+      rgba(79, 70, 229, 0.15),
+      transparent 34%
+    ),
+    radial-gradient(
+      ellipse at 92% 30%,
+      rgba(37, 99, 235, 0.09),
+      transparent 30%
+    ),
+    var(--app-bg);
+
+  font-family: 'DM Sans', sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+textarea,
+select,
+input {
+  font: inherit;
+}
+
+button,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+::selection {
+  color: #fff;
+  background: rgba(129, 140, 248, 0.38);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 3px;
+}
+
+/* ========================================
+   2. PAGE BACKGROUND & CENTERED LAYOUT
+======================================== */
+
+main.min-h-screen {
+  position: relative;
+  isolation: isolate;
+  min-height: 78vh;
+  padding: 58px 24px 76px !important;
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(99, 102, 241, 0.13),
+      transparent 42%
+    ),
+    transparent !important;
+}
+
+main.min-h-screen > div {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  gap: 28px !important;
+
+  width: 100%;
+  max-width: 1000px !important;
+  margin-inline: auto !important;
+}
+
+/* Hide the existing history sidebar without editing React. */
+main.min-h-screen > div > aside {
+  display: none !important;
+}
+
+/* Make the assistant use the full centered content width. */
+main.min-h-screen > div > section {
+  grid-column: 1 / -1 !important;
+  width: 100%;
+  min-width: 0;
+}
+
+/* ========================================
+   3. MAIN ASSISTANT CARD
+======================================== */
+
+main.min-h-screen > div > section > div {
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+
+  padding: clamp(22px, 4vw, 38px) !important;
+
+  color: var(--text-primary) !important;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(22, 31, 51, 0.97),
+      rgba(12, 17, 30, 0.98) 62%,
+      rgba(17, 21, 39, 0.98)
+    ) !important;
+
+  border: 1px solid rgba(148, 163, 184, 0.16) !important;
+  border-radius: var(--card-radius) !important;
+
+  box-shadow: var(--shadow-card) !important;
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+
+/* Subtle decorative glow at the top of the card. */
+main.min-h-screen > div > section > div::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  pointer-events: none;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(129, 140, 248, 0.75),
+    rgba(96, 165, 250, 0.45),
+    transparent
+  );
+}
+
+/* Assistant title row. */
+main.min-h-screen > div > section > div > div:first-child {
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 25px !important;
+}
+
+main.min-h-screen h1 {
+  margin: 0;
+  color: #f5f7ff !important;
+
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(25px, 3vw, 34px) !important;
+  font-weight: 800 !important;
+  line-height: 1.25;
+  letter-spacing: -1.1px;
+}
+
+main.min-h-screen h1::selection {
+  background: rgba(129, 140, 248, 0.4);
+}
+
+/* ========================================
+   4. SYMPTOM INPUT CARD
+======================================== */
+
+main.min-h-screen > div > section
+  [class*="bg-black/65"] {
+  padding: clamp(18px, 3vw, 28px) !important;
+
+  background: rgba(8, 13, 25, 0.58) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 19px !important;
+
+  box-shadow:
+    0 10px 35px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.02) !important;
+}
+
+main.min-h-screen label {
+  display: block;
+  margin-bottom: 12px !important;
+
+  color: #dce5f8 !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.15px;
+}
+
+/* Large, comfortable symptom text area. */
+main.min-h-screen textarea {
+  display: block;
+  width: 100%;
+  min-height: 190px !important;
+  padding: 19px 20px !important;
+  resize: vertical;
+
+  color: var(--text-primary) !important;
+  caret-color: var(--accent-bright);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(18, 27, 45, 0.95),
+      rgba(11, 17, 30, 0.98)
+    ) !important;
+
+  border: 1px solid rgba(148, 163, 184, 0.19) !important;
+  border-radius: var(--control-radius) !important;
+
+  font-size: 15px !important;
+  line-height: 1.8;
+
+  box-shadow: none !important;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease !important;
+}
+
+main.min-h-screen textarea::placeholder {
+  color: #71809a !important;
+  opacity: 1;
+}
+
+main.min-h-screen textarea:hover {
+  border-color: rgba(148, 163, 184, 0.3) !important;
+}
+
+main.min-h-screen textarea:focus {
+  outline: none !important;
+  border-color: rgba(129, 140, 248, 0.85) !important;
+
+  box-shadow:
+    0 0 0 3px rgba(129, 140, 248, 0.12),
+    0 0 28px rgba(99, 102, 241, 0.06) !important;
+}
+
+main.min-h-screen textarea:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+/* ========================================
+   5. LANGUAGE SELECTOR
+======================================== */
+
+main.min-h-screen select {
+  min-height: 44px;
+  padding: 10px 38px 10px 13px !important;
+
+  color: #e5eaff !important;
+  background-color: #151d30 !important;
+
+  border: 1px solid var(--border) !important;
+  border-radius: 12px !important;
+
+  font-size: 13px !important;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition:
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+main.min-h-screen select:hover {
+  background-color: #1b2540 !important;
+  border-color: var(--border-hover) !important;
+}
+
+main.min-h-screen select:focus {
+  outline: none !important;
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.12) !important;
+}
+
+main.min-h-screen select option {
+  color: #f1f5ff;
+  background: #111827;
+}
+
+/* ========================================
+   6. BUTTONS & INTERACTIONS
+======================================== */
+
+main.min-h-screen button {
+  min-height: 42px;
+  padding: 10px 16px !important;
+
+  border-radius: 12px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1px;
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease,
+    opacity 180ms ease !important;
+}
+
+main.min-h-screen button:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+main.min-h-screen button:not(:disabled):active {
+  transform: translateY(0);
+}
+
+/* Speak and Clear buttons. */
+main.min-h-screen button[class*="bg-white/6"],
+main.min-h-screen button[class*="bg-white/10"] {
+  color: #dce5fa !important;
+  background: rgba(148, 163, 184, 0.07) !important;
+  border: 1px solid var(--border) !important;
+}
+
+main.min-h-screen button[class*="bg-white/6"]:hover,
+main.min-h-screen button[class*="bg-white/10"]:hover {
+  background: rgba(129, 140, 248, 0.12) !important;
+  border-color: var(--border-hover) !important;
+}
+
+/* Main Get AI Analysis button. */
+main.min-h-screen button[class*="from-cyan-500"] {
+  min-height: 46px;
+  padding: 12px 20px !important;
+
+  color: #fff !important;
+  background: linear-gradient(
+    110deg,
+    #6366f1 0%,
+    #7c6cf2 48%,
+    #4f8df7 100%
+  ) !important;
+
+  border: 1px solid rgba(165, 180, 252, 0.45) !important;
+
+  box-shadow:
+    0 7px 22px rgba(99, 102, 241, 0.23),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
+}
+
+main.min-h-screen button[class*="from-cyan-500"]:not(:disabled):hover {
+  background: linear-gradient(
+    110deg,
+    #7778fa,
+    #8b7cf7 48%,
+    #60a5fa
+  ) !important;
+
+  box-shadow: 0 10px 28px rgba(99, 102, 241, 0.32) !important;
+}
+
+/* Disabled submit button. */
+main.min-h-screen button:disabled {
+  box-shadow: none !important;
+  opacity: 0.55;
+}
+
+/* Listening state. */
+main.min-h-screen button[class*="bg-rose-600"] {
+  color: #fff !important;
+  background: rgba(225, 29, 72, 0.22) !important;
+  border: 1px solid rgba(251, 113, 133, 0.42) !important;
+}
+
+/* ========================================
+   7. EMPTY STATE & ERROR MESSAGE
+======================================== */
+
+main.min-h-screen > div > section > div > div[class*="text-center"] {
+  padding: 24px 18px;
+  color: var(--text-secondary) !important;
+}
+
+main.min-h-screen > div > section > div > div[class*="text-center"] p {
+  margin-top: 0;
+  margin-bottom: 8px;
+  color: var(--text-secondary);
+}
+
+main.min-h-screen > div > section > div > div[class*="text-center"] strong {
+  color: var(--accent-bright);
+  font-weight: 700;
+}
+
+main.min-h-screen > div > section > div > div[class*="text-red-400"] {
+  padding: 14px 16px !important;
+  color: #fda4af !important;
+
+  background: rgba(127, 29, 29, 0.18) !important;
+  border: 1px solid rgba(251, 113, 133, 0.25) !important;
+  border-radius: 13px !important;
+}
+
+/* ========================================
+   8. LOADING STATE
+======================================== */
+
+main.min-h-screen [class*="animate-spin"] {
+  animation-duration: 1s;
+}
+
+main.min-h-screen [class*="border-t-cyan-500"] {
+  border-top-color: var(--accent-bright) !important;
+}
+
+main.min-h-screen p[class*="text-slate-700"] {
+  color: #e5eaff !important;
+}
+
+main.min-h-screen p[class*="text-slate-500"] {
+  color: var(--text-muted) !important;
+}
+
+/* ========================================
+   9. AI DIAGNOSIS RESULT CARDS
+======================================== */
+
+/* Result sections: conditions, recommendations,
+   and when to see a doctor. */
+main.min-h-screen [class*="dark:bg-black/40"] {
+  padding: 24px !important;
+
+  color: var(--text-primary) !important;
+  background: rgba(17, 25, 42, 0.8) !important;
+
+  border: 1px solid var(--border) !important;
+  border-radius: 19px !important;
+
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.13) !important;
+  backdrop-filter: blur(14px);
+}
+
+main.min-h-screen [class*="dark:bg-black/40"] h3 {
+  color: #eef2ff !important;
+  font-family: 'Manrope', sans-serif;
+  font-size: 17px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.2px;
+}
+
+/* Potential condition cards. */
+main.min-h-screen [class*="dark:bg-black/40"]
+  [class*="rounded-2xl"][class*="border"] {
+  padding: 20px !important;
+  border-radius: 15px !important;
+
+  box-shadow: none !important;
+  transition:
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+main.min-h-screen [class*="dark:bg-black/40"]
+  [class*="rounded-2xl"][class*="border"]:hover {
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
+main.min-h-screen [class*="dark:bg-black/40"] h4 {
+  color: #f1f5ff !important;
+  font-family: 'Manrope', sans-serif;
+  font-size: 17px !important;
+  font-weight: 750 !important;
+  line-height: 1.5;
+}
+
+main.min-h-screen [class*="dark:bg-black/40"] p,
+main.min-h-screen [class*="dark:bg-black/40"] li {
+  color: #c3cee2 !important;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* Recommendation list items. */
+main.min-h-screen [class*="dark:bg-black/40"] li {
+  padding: 13px 15px !important;
+
+  background: rgba(148, 163, 184, 0.045) !important;
+  border: 1px solid rgba(148, 163, 184, 0.11) !important;
+  border-radius: 12px !important;
+}
+
+/* Severity labels retain their meaning. */
+main.min-h-screen [class*="rounded-full"][class*="text-emerald-300"] {
+  color: #6ee7b7 !important;
+  background: rgba(16, 185, 129, 0.12) !important;
+}
+
+main.min-h-screen [class*="rounded-full"][class*="text-yellow-300"] {
+  color: #fde68a !important;
+  background: rgba(234, 179, 8, 0.12) !important;
+}
+
+main.min-h-screen [class*="rounded-full"][class*="text-orange-300"] {
+  color: #fdba74 !important;
+  background: rgba(249, 115, 22, 0.12) !important;
+}
+
+main.min-h-screen [class*="rounded-full"][class*="text-red-300"] {
+  color: #fda4af !important;
+  background: rgba(244, 63, 94, 0.12) !important;
+}
+
+/* Doctor guidance warning card. */
+main.min-h-screen [class*="bg-red-900/20"] {
+  background: rgba(127, 29, 29, 0.18) !important;
+  border-color: rgba(251, 113, 133, 0.25) !important;
+  border-radius: 13px !important;
+}
+
+/* ========================================
+   10. DISCLAIMER & RESET AREA
+======================================== */
+
+main.min-h-screen > div > section > div > div:last-child {
+  gap: 16px;
+}
+
+main.min-h-screen > div > section > div > div:last-child
+  > div:first-child {
+  color: var(--text-muted) !important;
+  font-size: 12px !important;
+  line-height: 1.8;
+}
+
+main.min-h-screen > div > section > div > div:last-child
+  > div:first-child strong {
+  color: #d5def2 !important;
+}
+
+/* Reset stays visually distinct from the primary action. */
+main.min-h-screen button:not([class*="from-cyan-500"])
+  + button:not([class*="from-cyan-500"]) {
+  border-color: var(--border);
+}
+
+/* ========================================
+   11. HEADER
+======================================== */
+
+header {
+  position: relative;
+  z-index: 30;
+}
+
+header > div {
+  background: rgba(8, 11, 20, 0.84) !important;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.12) !important;
+
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12) !important;
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+header > div > div {
+  max-width: 1050px !important;
+  min-height: 68px;
+}
+
+/* Logo. */
+header a span {
+  font-family: 'Manrope', sans-serif;
+  letter-spacing: -0.5px;
+}
+
+/* Hide sign-in, history and logout navigation controls
+   without modifying their React components. */
+header nav {
+  display: none !important;
+}
+
+/* ========================================
+   12. FOOTER
+======================================== */
+
+footer {
+  margin-top: auto;
+}
+
+footer > div {
+  padding: 25px 20px !important;
+
+  background: rgba(8, 11, 20, 0.75) !important;
+  border-top: 1px solid rgba(148, 163, 184, 0.12) !important;
+}
+
+footer p {
+  color: var(--text-muted) !important;
+  font-size: 12px !important;
+}
+
+footer [class*="text-red-400"] {
+  color: #fda4af !important;
+}
+
+/* ========================================
+   13. SCROLLBARS
+======================================== */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #35415d transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #35415d;
+  border: 2px solid transparent;
+  border-radius: 20px;
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #59688c;
+}
+
+/* ========================================
+   14. RESPONSIVE DESIGN
+======================================== */
+
+@media (max-width: 768px) {
+  main.min-h-screen {
+    padding: 32px 16px 48px !important;
+  }
+
+  main.min-h-screen > div {
+    gap: 18px !important;
+  }
+
+  main.min-h-screen > div > section > div {
+    padding: 22px 17px !important;
+    border-radius: 20px !important;
+  }
+
+  main.min-h-screen > div > section > div > div:first-child {
+    align-items: flex-start;
+    margin-bottom: 20px !important;
+  }
+
+  main.min-h-screen h1 {
+    font-size: 26px !important;
+    letter-spacing: -0.7px;
+  }
+
+  main.min-h-screen > div > section
+    [class*="bg-black/65"] {
+    padding: 16px !important;
+  }
+
+  main.min-h-screen textarea {
+    min-height: 170px !important;
+    padding: 15px !important;
+    font-size: 14px !important;
+  }
+
+  main.min-h-screen select {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Wrap language, voice, clear and submit controls. */
+  main.min-h-screen textarea + div {
+    flex-wrap: wrap;
+    align-items: stretch;
+  }
+
+  main.min-h-screen [class*="dark:bg-black/40"] {
+    padding: 18px !important;
+  }
+
+  main.min-h-screen [class*="dark:bg-black/40"]
+    [class*="rounded-2xl"][class*="border"] {
+    padding: 15px !important;
+  }
+
+  footer > div > div > div:last-child {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  main.min-h-screen {
+    padding: 24px 12px 36px !important;
+  }
+
+  main.min-h-screen > div > section > div {
+    padding: 17px 12px !important;
+  }
+
+  main.min-h-screen h1 {
+    font-size: 23px !important;
+  }
+
+  main.min-h-screen > div > section
+    [class*="bg-black/65"] {
+    padding: 13px !important;
+  }
+
+  main.min-h-screen textarea {
+    min-height: 155px !important;
+  }
+
+  main.min-h-screen button {
+    padding: 10px 12px !important;
+    font-size: 12px !important;
+  }
+
+  main.min-h-screen [class*="dark:bg-black/40"] {
+    padding: 15px !important;
+  }
+}
+
+/* ========================================
+   15. REDUCED MOTION ACCESSIBILITY
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
