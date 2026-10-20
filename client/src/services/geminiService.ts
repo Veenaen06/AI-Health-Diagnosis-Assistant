@@ -21,7 +21,7 @@ function tryParseJsonMaybe(text: string): AnyObj | string {
   }
 }
 
-const API_BASE = "http://localhost:4000";
+const API_BASE = "https://ai-health-diagnosis-assistant-backend.onrender.com";
 
 export async function getDiagnosis(symptoms: string): Promise<any> {
   const res = await fetch(`${API_BASE}/api/diagnosis`, {
