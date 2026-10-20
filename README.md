@@ -139,9 +139,6 @@ http://localhost:5173
 
 Open the URL shown by Vite in your browser.
 
-```bash
-npm run build
-```
 
 ## Deployment
 
