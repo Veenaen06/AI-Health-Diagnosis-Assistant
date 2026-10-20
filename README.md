@@ -5,7 +5,7 @@ An AI-powered health information web application that accepts symptoms and retur
 > **Medical disclaimer:** This project is for educational and informational purposes only. It does not provide a medical diagnosis and is not a substitute for a qualified healthcare professional. For urgent or severe symptoms, seek medical help.
 
 ## Live Demo
-        https://ai-health-diagnosis-assistant-ihuf.vercel.app
+https://ai-health-diagnosis-assistant-ihuf.vercel.app
 
 
 ## Features
